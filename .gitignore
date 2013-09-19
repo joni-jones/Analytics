@@ -1,0 +1,5 @@
+/.idea
+/nbproject
+/protected/config/development.php
+/protected/runtime
+/assets
