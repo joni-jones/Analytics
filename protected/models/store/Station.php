@@ -41,6 +41,7 @@ class Station extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'store' => array(self::BELONGS_TO, 'Store', 'store_id'),
+            'visits' => array(self::HAS_MANY, 'Visit', 'station_id')
 		);
 	}
 
