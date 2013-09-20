@@ -5,20 +5,19 @@
  *
  * The followings are the available columns in table 'user':
  * @property string $id
+ * @property string $parent_id
+ * @property integer $role_id
  * @property string $password
  * @property string $email
  * @property string $first_name
  * @property string $last_name
  * @property string $last_login
- * @property string $role
+ *
+ * The followings are the available model relations:
+ * @property Role $role
  */
 class User extends CActiveRecord
 {
-    const ROLE_ADMIN = 'admin';
-    const ROLE_USER = 'user';
-    const ROLE_EMPLOYEE = 'employee';
-    const ROLE_CLIENT = 'client';
-
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,13 +34,16 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('role_id', 'numerical', 'integerOnly'=>true),
+			array('parent_id, last_login', 'length', 'max'=>11),
 			array('password', 'length', 'max'=>60),
 			array('email', 'length', 'max'=>50),
             array('email', 'required'),
             array('email', 'unique'),
 			array('first_name, last_name', 'length', 'max'=>25),
-			array('last_login', 'length', 'max'=>11),
-			array('role', 'length', 'max'=>8),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, parent_id, role_id, password, email, first_name, last_name, last_login', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,6 +55,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'role' => array(self::BELONGS_TO, 'Role', 'role_id'),
+            'stores' => array(self::HAS_MANY, 'Store', 'user_id')
 		);
 	}
 
@@ -63,12 +67,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'parent_id' => 'Parent',
+			'role_id' => 'Role',
 			'password' => 'Password',
 			'email' => 'Email',
 			'first_name' => 'First Name',
 			'last_name' => 'Last Name',
 			'last_login' => 'Last Login',
-			'role' => 'Role',
 		);
 	}
 
@@ -91,12 +96,13 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+		$criteria->compare('parent_id',$this->parent_id,true);
+		$criteria->compare('role_id',$this->role_id);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('first_name',$this->first_name,true);
 		$criteria->compare('last_name',$this->last_name,true);
 		$criteria->compare('last_login',$this->last_login,true);
-		$criteria->compare('role',$this->role,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -150,20 +156,8 @@ class User extends CActiveRecord
         return CPasswordHelper::hashPassword($password);
     }
 
-    /**
-     * Get roles list
-     *
-     * @access public
-     * @static
-     * @return array
-     */
-    public static function getRoles()
+    public function getRole()
     {
-        return array(
-            self::ROLE_ADMIN => Yii::t('app', 'Administrator'),
-            self::ROLE_USER => Yii::t('app', 'User'),
-            self::ROLE_CLIENT => Yii::t('app', 'Client'),
-            self::ROLE_EMPLOYEE => Yii::t('app', 'Employee'),
-        );
+        return Role::model()->getRole($this->role_id);
     }
 }
