@@ -7,7 +7,7 @@ return array(
         'data' => null,
         'children' => array(),
     ),
-    User::ROLE_USER => array(
+    'user' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'User',
         'bizRule' => null,
@@ -16,31 +16,31 @@ return array(
             'guest' //extend guest role
         )
     ),
-    User::ROLE_CLIENT => array(
+    Role::EMPLOYEE => array(
         'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Client',
+        'description' => 'Employee',
         'bizRule' => null,
         'data' => null,
         'children' => array(
             'user'
         )
     ),
-    User::ROLE_EMPLOYEE => array(
+    Role::CLIENT => array(
         'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Employee',
+        'description' => 'Client',
         'bizRule' => null,
         'data' => null,
         'children' => array(
-            User::ROLE_USER
+            Role::EMPLOYEE
         )
     ),
-    User::ROLE_ADMIN => array(
+    Role::ADMIN => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Administrator',
         'bizRule' => null,
         'data' => null,
         'children' => array(
-            User::ROLE_EMPLOYEE
+            Role::CLIENT
         )
     )
 );
