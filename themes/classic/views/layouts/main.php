@@ -5,9 +5,17 @@
     <base href="<?=Yii::app()->request->baseUrl;?>">
     <link rel="icon" href="<?=Yii::app()->request->baseUrl;?>/images/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="<?=Yii::app()->request->baseUrl;?>/js/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?=Yii::app()->request->baseUrl;?>/js/pnotify/jquery.pnotify.default.css"/>
     <link rel="stylesheet" type="text/css" href="<?=Yii::app()->request->baseUrl;?>/css/style.css"/>
     <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/pnotify/jquery.pnotify.min.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/underscore-min.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/backbone-min.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/app.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/models.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/collections.js"></script>
+    <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/views.js"></script>
     <title><?=CHtml::encode($this->pageTitle);?></title>
 </head>
 <body>
