@@ -1,30 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "store".
+ * This is the model class for table "region".
  *
- * The followings are the available columns in table 'store':
- * @property string $id
- * @property string $user_id
+ * The followings are the available columns in table 'region':
+ * @property integer $id
  * @property string $name
- * @property string $work_time
- * @property string $address
- * @property int $region_id
- * @property double $latitude
- * @property double $longitude
  *
  * The followings are the available model relations:
- * @property User $user
- * @property Region $region
+ * @property Store[] $stores
  */
-class Store extends CActiveRecord
+class Region extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'store';
+		return 'region';
 	}
 
 	/**
@@ -33,12 +26,8 @@ class Store extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('latitude, longitude', 'numerical'),
-			array('user_id', 'length', 'max'=>11),
 			array('name', 'length', 'max'=>45),
-			array('work_time', 'length', 'max'=>30),
-			array('address', 'length', 'max'=>90),
-			array('region', 'length', 'max'=>10),
+			array('name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,12 +36,8 @@ class Store extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'stations' => array(self::HAS_MANY, 'Station', 'store_id'),
-            'region' => array(self::BELONGS_TO, 'Region', 'region_id'),
+			'stores' => array(self::HAS_MANY, 'Store', 'region_id'),
 		);
 	}
 
@@ -63,13 +48,7 @@ class Store extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
 			'name' => 'Name',
-			'work_time' => 'Work Time',
-			'address' => 'Address',
-			'region' => 'Region',
-			'latitude' => 'Latitude',
-			'longitude' => 'Longitude',
 		);
 	}
 
@@ -87,15 +66,8 @@ class Store extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('work_time',$this->work_time,true);
-		$criteria->compare('address',$this->address,true);
-		$criteria->compare('region',$this->region,true);
-		$criteria->compare('latitude',$this->latitude);
-		$criteria->compare('longitude',$this->longitude);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -106,7 +78,7 @@ class Store extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Store the static model class
+	 * @return Region the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
