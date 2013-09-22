@@ -8,18 +8,10 @@ class m130920_120007_create_report_table extends CDbMigration
             'id' => 'TINYINT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'name' => 'CHAR(45) NOT NULL DEFAULT "0"'
         ));
-        $this->insert('report', array(
-            'name' => 'Shopper Retention',
-        ));
-        $this->insert('report', array(
-            'name' => 'Cross Shopping',
-        ));
-        $this->insert('report', array(
-            'name' => 'Outside Traffic Report',
-        ));
-        $this->insert('report', array(
-            'name' => 'Window Display',
-        ));
+        $this->insert('report', array('name' => Yii::t('app', 'Shopper Retention')));
+        $this->insert('report', array('name' => Yii::t('app', 'Cross Shopping')));
+        $this->insert('report', array('name' => Yii::t('app', 'Outside Traffic Report')));
+        $this->insert('report', array('name' => Yii::t('app', 'Window Display')));
 	}
 
 	public function safeDown()

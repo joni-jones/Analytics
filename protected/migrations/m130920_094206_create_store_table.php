@@ -10,7 +10,6 @@ class m130920_094206_create_store_table extends CDbMigration
             'name' => 'CHAR(45) NOT NULL DEFAULT ""',
             'work_time' => 'CHAR(30) NOT NULL DEFAULT ""',
             'address' => 'VARCHAR(90) NOT NULL DEFAULT ""',
-            'region' => 'CHAR(10) NOT NULL DEFAULT ""',
             'latitude' => 'FLOAT(10,7) NOT NULL DEFAULT "0.0000000"',
             'longitude' => 'FLOAT(10,7) NOT NULL DEFAULT "0.0000000"'
         ));
