@@ -1,7 +1,8 @@
 <?php
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'',
+	'name'=>'Analytics',
+    'theme' => 'classic',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -9,7 +10,10 @@ return array(
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
-		'application.components.*',
+        'application.models.user.*',
+        'application.models.store.*',
+        'application.components.*',
+        'application.components.controllers.*',
 	),
 
 	'modules'=>array(),
@@ -49,6 +53,15 @@ return array(
 				),
 			),
 		),
+        'clientScript' => array(
+            'scriptMap' => array(
+                'jquery.js' => false
+            )
+        ),
+        'authManager' => array(
+            'class' => 'PhpAuthManager',
+            'defaultRoles' => array('guest')
+        ),
 	),
 
 	// application-level parameters that can be accessed
@@ -57,4 +70,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 	),
+    'sourceLanguage'=>'en_us',
+    'language'=>'ru_ru',
+    'charset'=>'utf-8',
 );
