@@ -57,62 +57,52 @@ App.Views.ShopperRetentionReport = Backbone.View.extend({
     initialize: function(){
         vent.on('render:ShopperRetention', this.render, this);
         this.data = new google.visualization.DataTable();
-        this.data.addColumn({type: 'number', label: 'Period'});
-        this.data.addColumn({type: 'number', label: 'Yesterday\'s outside traffic'});
-        this.data.addColumn({type: 'number', label: 'Baseline\'s outside traffic'});
+        this.data.addColumn({type: 'string', label: 'Period'});
+        this.data.addColumn({type: 'number', label: 'Shoppers'});
+        this.data.addColumn({type: 'number', label: 'Comparison period'});
         this.data.addRows([
-            [1, 10, 13],
-            [2, 15, 18],
-            [3, 20, 21],
-            [4, 25, 30],
-            [5, 27, 25],
-            [6, 33, 35],
-            [7, 24, 32],
-            [8, 15, 20]
+            ['1 week later', 0.14, 0.11],
+            ['2 weeks later', 0.22, 0.18],
+            ['3 weeks later', 0.28, 0.22],
+            ['4 weeks later', 0.35, 0.28],
+            ['5 weeks later', 0.40, 0.32],
+            ['6 weeks later', 0.44, 0.36]
         ]);
-
-        // Set chart options
-        this.options = {
-            title: 'Revenue and Revenue per Transaction',
-            height: 400,
-            isStacked: true,
-            legend: {
-                position: 'top',
-                alignment: 'start'
-            },
-            vAxis:{
-                gridlines: {
-                    count: 0
-                },
-                minValue: 0,
-                maxValue: 40
-            },
-            hAxis: {
-                gridlines: {
-                    count: 0
-                }
-            },
-            titleTextStyle:{
-                fontSize: 13
-            },
-            series: {
-                0: {
-                    type: 'bars',
-                    color: '#9dc7e8',
-                    enableInteractivity: false
-                },
-                1: {
-                    type: 'line',
-                    color: '#ff903b',
-                    pointSize: 8,
-                    enableInteractivity: false
-                }
-            }
-        };
     },
     render: function(){
-        var chart = new google.visualization.ComboChart(document.getElementById(this.id));
-        chart.draw(this.data, this.options);
+        this.getReportContainer();
         return this;
+    },
+    dateRangeChange: function(timestamp, period){
+        this.model.dateRangeChange(timestamp, period);
+    },
+    customerTypeChange: function(type){
+        this.model.customerTypeChange(type);
+    },
+    storeChange: function(store){
+        this.model.storeChange(store);
+    },
+    draw: function(){
+        var chart = new google.visualization.ComboChart(document.getElementById(this.id));
+        chart.draw(this.data, this.model.get('options'));
+    },
+    getReportContainer: function(){
+        App.Helpers.Progress.show();
+        var self = this;
+        $.ajax({
+            url: '/ajax/shopperretentionview',
+            type: 'get',
+            dataType: 'html',
+            success: function(response){
+                $('#report-container').html(response);
+                self.model.set('store', $('select[name="store"]').val());
+                var $dateRange = $('select[name="date_range"]');
+                self.model.set('timestamp', $dateRange.val());
+                self.model.setTitle($dateRange.children('option').filter(':selected').text());
+                self.model.set('type', parseInt($('input[name="customer_type"]').val()));
+                self.draw();
+                App.Helpers.Progress.hide();
+            }
+        });
     }
 });
