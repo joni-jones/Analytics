@@ -85,10 +85,12 @@
     };
     App.Helpers.Progress = {};
     App.Helpers.Progress.show = function(){
-        $('#progress-modal').modal('show');
+        var $bar = $('#progress-modal');
+        $bar.removeClass('hide').modal('show');
     };
     App.Helpers.Progress.hide = function(){
-        $('#progress-modal').modal('hide');
+        var $bar = $('#progress-modal');
+        $bar.addClass('hide').modal('hide');
     };
     App.Helpers.dataTable = function(selector){
         $(selector).dataTable({

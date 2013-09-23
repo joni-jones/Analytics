@@ -33,9 +33,9 @@
     </header>
     <!-- end header -->
     <!-- content -->
-    <div class="container" id="container">
+<!--    <div class="container" id="container">-->
         <?=$content;?>
-    </div>
+<!--    </div>-->
     <!-- end content -->
 </div>
 <!-- footer -->
@@ -43,5 +43,6 @@
     <?=$this->renderPartial('/layouts/_blocks/footer');?>
 </footer>
 <!-- end footer -->
+<?=$this->renderPartial('/layouts/_blocks/progress_bar');?>
 </body>
 </html>
