@@ -1,4 +1,4 @@
-#Charts Yii
+#Analytics
 
 ##Yii project settings
 
@@ -14,3 +14,16 @@ to ``yiilite.php`` in ``index.php``.
     username = '';
 
     password = '';
+
+4. Specify base url in application config.
+
+5. Specify administrator email:
+
+    params['admin_email'] = '';
+
+6. Specify source and default language:
+
+    language = '';
+    sourceLanguage = '';
+
+7. All localization files located in ``protected/messages/language/app.php|sys.php``
