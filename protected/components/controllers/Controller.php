@@ -14,10 +14,21 @@ class Controller extends CController
 
 	public $layout = 'main';
 
-    protected function _responseJSON($data, $withExit = TRUE){
+    protected function _responseJSON($data, $withExit = true){
         header('Content-type: application/json');
         echo CJSON::encode($data);
-        if($withExit){
+        if($withExit)
+        {
+            Yii::app()->end();
+        }
+    }
+
+    protected function _responseHtml($data, $withExit = true)
+    {
+        header('Content-type: text/html');
+        echo $data;
+        if($withExit)
+        {
             Yii::app()->end();
         }
     }

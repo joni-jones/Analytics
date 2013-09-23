@@ -31,6 +31,8 @@ class UserIdentity extends CUserIdentity{
             $this->username = $user->email;
             $this->setState('username', $user->email);
             $this->setState('email', $user->email);
+            $this->setState('role_id', $user->role_id);
+            $this->setState('role', $user->role->name);
             $this->setState('lastLogin', ($user->last_login) ? $user->last_login : time());
             $user->updateLastLoginTime();
             $this->errorCode = self::ERROR_NONE;

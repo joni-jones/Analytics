@@ -85,7 +85,7 @@ class Report extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public function getReports()
+    public function getAll()
     {
         return self::model()->findAll();
     }

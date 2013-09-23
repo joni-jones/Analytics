@@ -5,6 +5,7 @@
  */
 class WebUser extends CWebUser{
     private $_model;
+    private $_role = null;
 
     /**
      * Get User model
@@ -14,7 +15,7 @@ class WebUser extends CWebUser{
      */
     public function getUser()
     {
-        if(!$this->isGuest && $this->_model === null)
+        if(!$this->isGuest)
         {
             $this->_model = User::model()->findByPk($this->id);
         }
@@ -29,11 +30,10 @@ class WebUser extends CWebUser{
      */
     public function getRole()
     {
-        $role = NULL;
-        if($user = $this->getUser())
+        if(!$this->isGuest)
         {
-            $role = $user->role;
+            $this->_role = Yii::app()->user->role;
         }
-        return $role;
+        return $this->_role;
     }
 }
